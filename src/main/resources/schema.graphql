@@ -1,0 +1,19 @@
+type Book{
+	id: Int
+	title: String
+	isbn: String
+	author: String
+	abridged: Boolean
+	bookFormat: String
+	publisher: String
+	noOfPages: Int
+	price: Int
+	
+}
+
+type Query{
+	getBook(id: Int): Book
+	getBooks: [Book]
+}
+
+

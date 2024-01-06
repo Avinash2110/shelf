@@ -19,6 +19,8 @@ import com.shelf.payloads.BookResponse;
 import com.shelf.payloads.BooksResponse;
 import com.shelf.repositories.BookRepository;
 
+import graphql.schema.DataFetcher;
+
 @Service
 public class BookService {
 	
@@ -88,6 +90,19 @@ public class BookService {
 		bookResponse.setStatus("SUCCESS");
 		bookResponse.setSuccessMessage("Book retrieved successfully");
 		return bookResponse;
+	}
+	
+	public DataFetcher<Book> graphqlFetchBookById() {
+		return env -> {
+			Long bookId = env.getArgument("id");
+			return bookRepository.getReferenceById(bookId);
+		};
+	}
+	
+	public DataFetcher<List<Book>> graphqlFetchBooks(){
+		return env -> {
+			return bookRepository.findAll();
+		};
 	}
 
 }

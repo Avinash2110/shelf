@@ -49,8 +49,11 @@ public class BookController {
 		return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/graphql", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "/graphql", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ExecutionResult bookGraphqlEndpoint(@RequestBody GraphqlRequestBody body) {
+		System.out.println(body.getQuery());
+		System.out.println(body.getOperationName());
+		if(body.getVariables()==null) {System.out.println(body.getVariables());}
 		return graphql.execute(ExecutionInput.newExecutionInput().query(body.getQuery()).operationName(body.getOperationName())
 				.variables(body.getVariables()).build());
 	}
