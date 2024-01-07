@@ -104,5 +104,20 @@ public class BookService {
 			return bookRepository.findAll();
 		};
 	}
+	
+	public DataFetcher<Book> graphqlSaveBook(){
+		return env -> {
+			
+			Book book = new Book();
+			book.setTitle(env.getArgument("title"));
+			book.setIsbn(env.getArgument("isbn"));
+			book.setAuthor(env.getArgument("author"));
+			book.setPublisher(env.getArgument("publisher"));
+			book.setNoOfPages(env.getArgument("noOfPages"));
+			book.setPrice(env.getArgument("price"));
+			
+			return bookRepository.save(book);
+		};
+	}
 
 }

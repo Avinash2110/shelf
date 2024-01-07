@@ -32,6 +32,7 @@ public class GraphqlConfiguration {
 		RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
 		.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBook", bookService.graphqlFetchBookById()))
 		.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBooks", bookService.graphqlFetchBooks()))
+		.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("insertBook", bookService.graphqlSaveBook()))
 		.build();
 		
 		SchemaGenerator schemaGenerator = new SchemaGenerator();

@@ -16,4 +16,8 @@ type Query{
 	getBooks: [Book]
 }
 
+type Mutation{
+	insertBook(title: String, isbn: String, author: String, publisher: String, noOfPages: Int, price: Int): Book
+}
+
 
