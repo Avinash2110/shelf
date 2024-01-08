@@ -12,10 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GraphqlRequestBody {
-	
+
 	private String query;
 	private String operationName;
 	private Map<String, Object> variables;
-	
 
 }

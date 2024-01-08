@@ -13,5 +13,5 @@ import com.shelf.models.Book;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-	
+
 }

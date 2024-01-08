@@ -12,23 +12,23 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BookDao {
-	
+
 	private Long id;
-	
+
 	private String title;
-	
+
 	private String isbn;
-	
+
 	private String author;
-	
+
 	private boolean abridged;
-	
+
 	private BookFormatType bookFormat;
-	
+
 	private String publisher;
-	
+
 	private int noOfPages;
-	
+
 	private int price;
 
 }

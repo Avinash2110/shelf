@@ -19,29 +19,29 @@ import graphql.schema.idl.TypeRuntimeWiring;
 
 @Configuration
 public class GraphqlConfiguration {
-	
+
 	@Autowired
 	private BookService bookService;
-	
+
 	@Bean
-	public GraphQL graphql() throws IOException{
+	public GraphQL graphql() throws IOException {
 		SchemaParser schemaParser = new SchemaParser();
 		ClassPathResource resource = new ClassPathResource("schema.graphql");
 		TypeDefinitionRegistry typeDefinitionRegistry = schemaParser.parse(resource.getInputStream());
-		
+
 		RuntimeWiring runtimeWiring = RuntimeWiring.newRuntimeWiring()
-		.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBook", bookService.graphqlFetchBookById()))
-		.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBooks", bookService.graphqlFetchBooks()))
-		.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("insertBook", bookService.graphqlSaveBook()))
-		.build();
-		
+				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBook",
+						bookService.graphqlFetchBookById()))
+				.type(TypeRuntimeWiring.newTypeWiring("Query").dataFetcher("getBooks", bookService.graphqlFetchBooks()))
+				.type(TypeRuntimeWiring.newTypeWiring("Mutation").dataFetcher("insertBook",
+						bookService.graphqlSaveBook()))
+				.build();
+
 		SchemaGenerator schemaGenerator = new SchemaGenerator();
-		GraphQLSchema graphqlSchema =  schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
-		
+		GraphQLSchema graphqlSchema = schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
+
 		return GraphQL.newGraphQL(graphqlSchema).build();
-		
-		
-		
+
 	}
 
 }

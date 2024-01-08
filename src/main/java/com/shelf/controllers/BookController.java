@@ -53,9 +53,11 @@ public class BookController {
 	public ExecutionResult bookGraphqlEndpoint(@RequestBody GraphqlRequestBody body) {
 		System.out.println(body.getQuery());
 		System.out.println(body.getOperationName());
-		if(body.getVariables()==null) {System.out.println(body.getVariables());}
-		return graphql.execute(ExecutionInput.newExecutionInput().query(body.getQuery()).operationName(body.getOperationName())
-				.variables(body.getVariables()).build());
+		if (body.getVariables() == null) {
+			System.out.println(body.getVariables());
+		}
+		return graphql.execute(ExecutionInput.newExecutionInput().query(body.getQuery())
+				.operationName(body.getOperationName()).variables(body.getVariables()).build());
 	}
 
 }

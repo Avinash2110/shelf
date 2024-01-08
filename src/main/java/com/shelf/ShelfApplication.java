@@ -11,7 +11,7 @@ public class ShelfApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShelfApplication.class, args);
 	}
-	
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();

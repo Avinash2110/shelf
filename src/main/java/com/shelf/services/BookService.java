@@ -23,18 +23,18 @@ import graphql.schema.DataFetcher;
 
 @Service
 public class BookService {
-	
+
 	@Autowired
 	private BookRepository bookRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	//api for inserting a new book by admin
+
+	// api for inserting a new book by admin
 	public BookResponse saveBook(BookDao bookRequest) {
-		
+
 		Book book = new Book();
-		
+
 		book.setAuthor(bookRequest.getAuthor());
 		book.setAbridged(bookRequest.isAbridged());
 		book.setBookFormat(bookRequest.getBookFormat());
@@ -43,9 +43,9 @@ public class BookService {
 		book.setPrice(bookRequest.getPrice());
 		book.setPublisher(bookRequest.getPublisher());
 		book.setTitle(bookRequest.getTitle());
-		
+
 		Book savedBook = bookRepository.save(book);
-		
+
 		BookDao bookDao = new BookDao();
 		bookDao.setId(savedBook.getId());
 		bookDao.setAbridged(savedBook.isAbridged());
@@ -56,32 +56,34 @@ public class BookService {
 		bookDao.setPrice(savedBook.getPrice());
 		bookDao.setPublisher(savedBook.getPublisher());
 		bookDao.setTitle(savedBook.getTitle());
-		
+
 		BookResponse bookResponse = new BookResponse();
-		
+
 		bookResponse.setBookDao(bookDao);
 		bookResponse.setStatus("SUCCESS");
 		bookResponse.setSuccessMessage("Book saved successfully");
-		
+
 		return bookResponse;
-		
+
 	}
-	
-	//API to fetch all the books available
-	//TODO: In future we may need to create pagination as the number of books will be large
+
+	// API to fetch all the books available
+	// TODO: In future we may need to create pagination as the number of books will
+	// be large
 	public BooksResponse fetchBooks() {
-		
-		List<Book> books= bookRepository.findAll();
-		List<BookDao> bookList= books.stream().map(entity -> modelMapper.map(entity, BookDao.class)).collect(Collectors.toList());
-		
+
+		List<Book> books = bookRepository.findAll();
+		List<BookDao> bookList = books.stream().map(entity -> modelMapper.map(entity, BookDao.class))
+				.collect(Collectors.toList());
+
 		BooksResponse booksResponse = new BooksResponse();
 		booksResponse.setStatus("SUCCESS");
 		booksResponse.setSuccessMessage("Retrieved Successfully");
 		booksResponse.setBookList(bookList);
-		
+
 		return booksResponse;
 	}
-	
+
 	public BookResponse fetchBookById(Long id) {
 		Book book = bookRepository.getReferenceById(id);
 		BookDao bookDao = modelMapper.map(book, BookDao.class);
@@ -91,23 +93,23 @@ public class BookService {
 		bookResponse.setSuccessMessage("Book retrieved successfully");
 		return bookResponse;
 	}
-	
+
 	public DataFetcher<Book> graphqlFetchBookById() {
 		return env -> {
 			Long bookId = env.getArgument("id");
 			return bookRepository.getReferenceById(bookId);
 		};
 	}
-	
-	public DataFetcher<List<Book>> graphqlFetchBooks(){
+
+	public DataFetcher<List<Book>> graphqlFetchBooks() {
 		return env -> {
 			return bookRepository.findAll();
 		};
 	}
-	
-	public DataFetcher<Book> graphqlSaveBook(){
+
+	public DataFetcher<Book> graphqlSaveBook() {
 		return env -> {
-			
+
 			Book book = new Book();
 			book.setTitle(env.getArgument("title"));
 			book.setIsbn(env.getArgument("isbn"));
@@ -115,7 +117,7 @@ public class BookService {
 			book.setPublisher(env.getArgument("publisher"));
 			book.setNoOfPages(env.getArgument("noOfPages"));
 			book.setPrice(env.getArgument("price"));
-			
+
 			return bookRepository.save(book);
 		};
 	}

@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @Getter
 public class BookResponse {
-	
+
 	private BookDao bookDao;
-	
+
 	private String status;
-	
+
 	private String successMessage;
 
 }
