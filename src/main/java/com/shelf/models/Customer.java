@@ -4,8 +4,12 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -41,6 +45,7 @@ public class Customer {
 	private String email;
 	
 	@Column(name="password", nullable = false)
+	@JsonIgnore
 	private String password;
 	
 	@Column(name="customerType", nullable = false)
